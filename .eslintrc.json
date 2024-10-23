@@ -13,5 +13,6 @@
         "caughtErrorsIgnorePattern": "^_"
       }
     ]
-  }
+  },
+  "ignorePatterns": ["node_modules/", ".next/", "ui/"]
 }
