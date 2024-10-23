@@ -1,5 +1,6 @@
 {
-  "name": "blog.nosyn.dev",
+  "name": "blog",
+  "description": "A blog at blog.nosyn.dev",
   "version": "0.1.0",
   "private": true,
   "scripts": {
