@@ -1,6 +1,6 @@
 import 'server-only';
 import { SignJWT, jwtVerify } from 'jose';
-import { SessionPayload } from '@/lib/definitions';
+import { SessionPayload } from '@/lib/actions/definitions';
 import { cookies } from 'next/headers';
 
 const secretKey = process.env.SESSION_SECRET;
@@ -14,7 +14,7 @@ export async function encrypt(payload: SessionPayload) {
     .sign(encodedKey);
 }
 
-export async function decrypt(session: string | undefined = '') {
+export async function decrypt(session: string) {
   try {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ['HS256'],
@@ -27,9 +27,14 @@ export async function decrypt(session: string | undefined = '') {
 
 export async function getSession() {
   const session = (await cookies()).get('session')?.value;
+
+  if (!session) {
+    return null;
+  }
+
   const payload = await decrypt(session);
 
-  if (!session || !payload) {
+  if (!payload) {
     return null;
   }
 
@@ -51,9 +56,14 @@ export async function createSession(userId: string) {
 
 export async function updateSession() {
   const session = (await cookies()).get('session')?.value;
+
+  if (!session) {
+    return null;
+  }
+
   const payload = await decrypt(session);
 
-  if (!session || !payload) {
+  if (!payload) {
     return null;
   }
 

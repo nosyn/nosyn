@@ -6,8 +6,8 @@ import {
   SignUpFormState,
   signInFormSchema,
   SignInFormState,
-} from '@/lib/definitions';
-import { createSession, deleteSession } from '@/lib/session';
+} from '@/lib/actions/definitions';
+import { createSession, deleteSession } from '@/lib/actions/session.action';
 import { redirect } from 'next/navigation';
 import { hash, compare } from 'bcryptjs';
 import { userTable } from '@/db/schema';
@@ -99,6 +99,7 @@ export const signIn = async (state: SignInFormState, formData: FormData) => {
       message: 'Invalid credentials.',
     };
   }
+  console.log('isValidPassword: ', isValidPassword);
 
   // 4. Create user session
   await createSession(String(user.id));
