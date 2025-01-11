@@ -1,21 +1,14 @@
-import fs from "fs";
-import matter from "gray-matter";
-import path from "path";
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeStringify from "rehype-stringify";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import { unified } from "unified";
-
-type Metadata = {
-  title: string;
-  publishedAt: string;
-  summary: string;
-  image?: string;
-};
+import fs from 'fs';
+import matter from 'gray-matter';
+import path from 'path';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
 
 function getMDXFiles(dir: string) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
+  return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx');
 }
 
 export async function markdownToHTML(markdown: string) {
@@ -25,8 +18,8 @@ export async function markdownToHTML(markdown: string) {
     .use(rehypePrettyCode, {
       // https://rehype-pretty.pages.dev/#usage
       theme: {
-        light: "min-light",
-        dark: "min-dark",
+        light: 'min-light',
+        dark: 'min-dark',
       },
       keepBackground: false,
     })
@@ -37,8 +30,8 @@ export async function markdownToHTML(markdown: string) {
 }
 
 export async function getPost(slug: string) {
-  const filePath = path.join("content", `${slug}.mdx`);
-  let source = fs.readFileSync(filePath, "utf-8");
+  const filePath = path.join('content', `${slug}.mdx`);
+  const source = fs.readFileSync(filePath, 'utf-8');
   const { content: rawContent, data: metadata } = matter(source);
   const content = await markdownToHTML(rawContent);
   return {
@@ -49,11 +42,11 @@ export async function getPost(slug: string) {
 }
 
 async function getAllPosts(dir: string) {
-  let mdxFiles = getMDXFiles(dir);
+  const mdxFiles = getMDXFiles(dir);
   return Promise.all(
     mdxFiles.map(async (file) => {
-      let slug = path.basename(file, path.extname(file));
-      let { metadata, source } = await getPost(slug);
+      const slug = path.basename(file, path.extname(file));
+      const { metadata, source } = await getPost(slug);
       return {
         metadata,
         slug,
@@ -64,5 +57,5 @@ async function getAllPosts(dir: string) {
 }
 
 export async function getBlogPosts() {
-  return getAllPosts(path.join(process.cwd(), "content"));
+  return getAllPosts(path.join(process.cwd(), 'content'));
 }
