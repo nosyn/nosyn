@@ -130,12 +130,6 @@ export function SignInForm() {
                 Sign In with Google
               </Button>
             </div>
-            <div className='mt-4 text-center text-sm'>
-              Don&apos;t have an account?{' '}
-              <Link href='/sign-up' className='underline'>
-                Sign up
-              </Link>
-            </div>
           </CardContent>
         </Card>
       </form>
