@@ -28,6 +28,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { authClient } from '@/lib/auth-client';
+import { PasswordInput } from '../inputs/password-input';
 
 export const signInFormSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
@@ -116,7 +117,7 @@ export function SignInForm() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input id='password' type='password' {...field} />
+                      <PasswordInput id='password' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
