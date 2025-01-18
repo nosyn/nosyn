@@ -9,12 +9,8 @@ export default async function AuthLayout({
   const session = await getSession();
 
   if (session) {
-    redirect('/');
+    redirect('/dashboard');
   }
 
-  return (
-    <main className='flex justify-center items-center h-screen bg-red-50'>
-      {children}
-    </main>
-  );
+  return <main>{children}</main>;
 }

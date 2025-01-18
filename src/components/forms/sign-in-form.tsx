@@ -25,16 +25,13 @@ import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-export const signInFormSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
-  password: z.string().min(8, { message: 'Be at least 8 characters long' }),
-});
-
-export type TSignInForm = z.infer<typeof signInFormSchema>;
+import { signInFormSchema, TSignInForm } from '@/schemas/auth.schema';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export function SignInForm() {
+  const router = useRouter();
+
   const form = useForm<TSignInForm>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -42,9 +39,18 @@ export function SignInForm() {
       password: '',
     },
   });
-  const { mutate, error, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ['sign-in'],
     mutationFn: signInAction,
+    onSuccess: () => {
+      toast.success('Signed in successfully. Moving to dashboard', {
+        id: 'sign-in',
+      });
+      router.push('/dashboard');
+    },
+    onError: (error) => {
+      toast.error(error.message, { id: 'sign-in' });
+    },
   });
 
   const onSubmit = useCallback(
@@ -99,7 +105,6 @@ export function SignInForm() {
                 )}
               />
 
-              {error && <div className='text-destructive'>{error.message}</div>}
               <Button type='submit' disabled={isPending}>
                 Sign In {isPending && <Loader2Icon className='animate-spin' />}
               </Button>

@@ -45,8 +45,8 @@ export const ResumeCard = ({
       onClick={handleClick}
     >
       <Card className='flex border-none shadow-none p-0 m-0'>
-        <div className='flex items-center justify-center'>
-          <Avatar className='flex-none'>
+        <div className='flex-none py-2'>
+          <Avatar className='flex-none border rounded-full w-12 h-12'>
             <AvatarImage
               src={logoUrl}
               alt={altText}
@@ -56,7 +56,7 @@ export const ResumeCard = ({
           </Avatar>
         </div>
         <div className='flex-grow items-center flex-col group'>
-          <CardHeader>
+          <CardHeader className='p-2'>
             <div className='flex items-center justify-between gap-x-2 text-base'>
               <h3 className='inline-flex items-center justify-center font-semibold leading-none text-xs sm:text-sm'>
                 {title}
@@ -98,7 +98,7 @@ export const ResumeCard = ({
                 duration: 0.7,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className='mt-2 text-xs sm:text-sm'
+              className='mt-2 text-xs sm:text-sm px-2'
             >
               {description}
             </motion.div>
