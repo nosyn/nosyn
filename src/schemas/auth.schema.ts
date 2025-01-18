@@ -17,33 +17,11 @@ export const signUpFormSchema = z.object({
     .trim(),
 });
 
-export type SignUpFormState =
-  | {
-      errors?: {
-        name?: string[];
-        email?: string[];
-        password?: string[];
-      };
-      message?: string;
-    }
-  | undefined;
+export type TSignUpForm = z.infer<typeof signUpFormSchema>;
 
 export const signInFormSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
   password: z.string().min(8, { message: 'Be at least 8 characters long' }),
 });
 
-export type SignInFormState =
-  | {
-      errors?: {
-        email?: string[];
-        password?: string[];
-      };
-      message?: string;
-    }
-  | undefined;
-
-export type SessionPayload = {
-  userId: string;
-  expiresAt: Date;
-};
+export type TSignInForm = z.infer<typeof signInFormSchema>;

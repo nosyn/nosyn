@@ -1,4 +1,4 @@
-import { getSession } from '@/lib/session';
+import { getSession } from '@/actions/auth.action';
 import { redirect } from 'next/navigation';
 
 export default async function AuthLayout({
@@ -9,12 +9,8 @@ export default async function AuthLayout({
   const session = await getSession();
 
   if (session) {
-    redirect('/');
+    redirect('/dashboard');
   }
 
-  return (
-    <main className='flex h-screen w-full items-center justify-center px-4'>
-      {children}
-    </main>
-  );
+  return <main>{children}</main>;
 }
