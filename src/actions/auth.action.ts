@@ -1,7 +1,6 @@
 'use server';
 
 import { auth } from '@/lib/auth';
-import { waitFor } from '@/lib/utils';
 import { TSignInForm, TSignUpForm } from '@/schemas/auth.schema';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
