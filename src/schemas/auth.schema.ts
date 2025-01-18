@@ -18,10 +18,3 @@ export const signUpFormSchema = z.object({
 });
 
 export type TSignUpForm = z.infer<typeof signUpFormSchema>;
-
-export const signInFormSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
-  password: z.string().min(8, { message: 'Be at least 8 characters long' }),
-});
-
-export type TSignInForm = z.infer<typeof signInFormSchema>;

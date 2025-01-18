@@ -35,3 +35,5 @@ export function formatDate(date: string) {
     return `${fullDate} (${yearsAgo}y ago)`;
   }
 }
+
+export const waitFor = (ms: number) => new Promise((r) => setTimeout(r, ms));

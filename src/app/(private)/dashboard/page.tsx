@@ -1,4 +1,4 @@
-import { getSession } from '@/actions/auth';
+import { getSession } from '@/actions/auth.action';
 import { SignOutForm } from '@/components/auth-form';
 
 export default async function DashboardPage() {

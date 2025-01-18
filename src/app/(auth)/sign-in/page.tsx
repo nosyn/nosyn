@@ -1,5 +1,9 @@
-import { SignInForm } from '@/components/auth-form';
+import { SignInForm } from '@/components/forms/sign-in.form';
 
 export default function SignInPage() {
-  return <SignInForm />;
+  return (
+    <div className='flex justify-center items-center'>
+      <SignInForm />
+    </div>
+  );
 }
