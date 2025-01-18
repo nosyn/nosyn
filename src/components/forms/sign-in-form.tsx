@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 
-import { signInAction } from '@/actions/auth.action';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -23,11 +22,19 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { signInFormSchema, TSignInForm } from '@/schemas/auth.schema';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import { z } from 'zod';
+import { authClient } from '@/lib/auth-client';
+
+export const signInFormSchema = z.object({
+  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+  password: z.string().min(8, { message: 'Be at least 8 characters long' }),
+});
+
+export type TSignInForm = z.infer<typeof signInFormSchema>;
 
 export function SignInForm() {
   const router = useRouter();
@@ -41,7 +48,18 @@ export function SignInForm() {
   });
   const { mutate, isPending } = useMutation({
     mutationKey: ['sign-in'],
-    mutationFn: signInAction,
+    mutationFn: async ({ email, password }: TSignInForm) => {
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return data;
+    },
     onSuccess: () => {
       toast.success('Signed in successfully. Moving to dashboard', {
         id: 'sign-in',
