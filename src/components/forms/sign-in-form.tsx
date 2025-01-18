@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -19,6 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { authClient } from '@/lib/auth-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
@@ -27,7 +26,6 @@ import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { authClient } from '@/lib/auth-client';
 import { PasswordInput } from '../inputs/password-input';
 
 export const signInFormSchema = z.object({
