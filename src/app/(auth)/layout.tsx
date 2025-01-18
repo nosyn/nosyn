@@ -1,4 +1,4 @@
-import { getSession } from '@/lib/session';
+import { getSession } from '@/actions/auth';
 import { redirect } from 'next/navigation';
 
 export default async function AuthLayout({
@@ -12,9 +12,5 @@ export default async function AuthLayout({
     redirect('/');
   }
 
-  return (
-    <main className='flex h-screen w-full items-center justify-center px-4'>
-      {children}
-    </main>
-  );
+  return <main>{children}</main>;
 }

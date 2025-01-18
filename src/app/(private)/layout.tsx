@@ -1,4 +1,4 @@
-import { getSession } from '@/lib/session';
+import { getSession } from '@/actions/auth';
 import { redirect } from 'next/navigation';
 
 export default async function PrivateLayout({

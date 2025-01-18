@@ -82,7 +82,7 @@ export function SignUpForm() {
 }
 
 export function SignInForm() {
-  const [state, action] = useActionState(signIn, undefined);
+  const signIn = useMutation;
 
   return (
     <form action={action}>

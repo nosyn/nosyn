@@ -1,5 +1,5 @@
+import { getSession } from '@/actions/auth';
 import { SignOutForm } from '@/components/auth-form';
-import { getSession } from '@/lib/session';
 
 export default async function DashboardPage() {
   const session = await getSession();
