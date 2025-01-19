@@ -8,7 +8,7 @@ import { Loader2Icon, LogInIcon, LogOutIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export function UserButton() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['user'],
     queryFn: () => authClient.getSession(),
   });
@@ -41,7 +41,11 @@ export function UserButton() {
       size={'icon'}
       className={'px-2'}
       onClick={() => {
-        signOut();
+        signOut(undefined, {
+          onSuccess: () => {
+            refetch();
+          },
+        });
       }}
       disabled={isSigningOut}
     >
