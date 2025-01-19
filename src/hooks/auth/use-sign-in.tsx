@@ -19,7 +19,7 @@ export const useSignIn = () => {
       return data;
     },
     onSuccess: () => {
-      toast.success('Signed in successfully. Moving to dashboard', {
+      toast.success('Signed in successfully.', {
         id: 'sign-in',
       });
     },

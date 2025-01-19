@@ -19,7 +19,7 @@ export function UserButton() {
   const user = data?.data?.user;
 
   if (isLoading) {
-    return <Loader2Icon size={24} className='animate-spin' />;
+    return <Loader2Icon className='animate-spin size-4' />;
   }
 
   if (!user) {
@@ -30,7 +30,7 @@ export function UserButton() {
         className={'px-2'}
         onClick={() => router.push('/sign-in')}
       >
-        <LogInIcon size={24} />
+        <LogInIcon className='size-4' />
       </Button>
     );
   }
@@ -45,7 +45,7 @@ export function UserButton() {
       }}
       disabled={isSigningOut}
     >
-      <LogOutIcon size={24} />
+      <LogOutIcon className='size-4' />
     </Button>
   );
 }
