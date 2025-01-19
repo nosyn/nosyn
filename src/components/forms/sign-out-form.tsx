@@ -1,31 +1,22 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
-import { Button } from '../ui/button';
-import { toast } from 'sonner';
+import { useSignOut } from '@/hooks/auth/use-sign-out';
 import { Loader2Icon } from 'lucide-react';
-import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import { Button } from '../ui/button';
 
 export const SignOutForm = () => {
   const router = useRouter();
-  const { mutate, isPending } = useMutation({
-    mutationKey: ['sign-out'],
-    mutationFn: async () => {
-      await authClient.signOut();
-    },
-    onSuccess: () => {
-      router.push('/sign-in');
-    },
-    onError: (error) => {
-      toast.error(error.message, { id: 'sign-out' });
-    },
-  });
+  const { mutate, isPending } = useSignOut();
 
   return (
     <Button
       onClick={() => {
-        mutate();
+        mutate(undefined, {
+          onSuccess: () => {
+            router.push('/sign-in');
+          },
+        });
       }}
       disabled={isPending}
     >

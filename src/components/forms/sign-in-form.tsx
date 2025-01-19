@@ -17,14 +17,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { authClient } from '@/lib/auth-client';
+import { useSignIn } from '@/hooks/auth/use-sign-in';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { z } from 'zod';
 import { PasswordInput } from '../inputs/password-input';
 
@@ -45,36 +43,17 @@ export function SignInForm() {
       password: '',
     },
   });
-  const { mutate, isPending } = useMutation({
-    mutationKey: ['sign-in'],
-    mutationFn: async ({ email, password }: TSignInForm) => {
-      const { data, error } = await authClient.signIn.email({
-        email,
-        password,
-      });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-
-      return data;
-    },
-    onSuccess: () => {
-      toast.success('Signed in successfully. Moving to dashboard', {
-        id: 'sign-in',
-      });
-      router.push('/dashboard');
-    },
-    onError: (error) => {
-      toast.error(error.message, { id: 'sign-in' });
-    },
-  });
+  const { mutate: signIn, isPending } = useSignIn();
 
   const onSubmit = useCallback(
     (values: TSignInForm) => {
-      mutate(values);
+      signIn(values, {
+        onSuccess: () => {
+          router.back();
+        },
+      });
     },
-    [mutate]
+    [signIn, router]
   );
 
   return (
