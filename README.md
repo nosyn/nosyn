@@ -5,3 +5,4 @@
 - I love coding and building tools
 - Anything challenge always fascinates me
 - I've lived in Vietnam/America/Thailand
+- (My website)[https://nosyn.dev] ~ New website for 2025 and still in progress
