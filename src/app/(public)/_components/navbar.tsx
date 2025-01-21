@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/tooltip';
 import { DATA } from '@/data/resume';
 import { cn } from '@/lib/utils';
+import { LayoutDashboardIcon } from 'lucide-react';
 import Link from 'next/link';
-import { UserButton } from './user-button';
 
 export default function Navbar() {
   return (
@@ -25,7 +25,7 @@ export default function Navbar() {
                   href={item.href}
                   className={cn(
                     buttonVariants({ variant: 'ghost', size: 'icon' }),
-                    'size-12'
+                    'size-8'
                   )}
                 >
                   <item.icon className='size-4' />
@@ -48,7 +48,7 @@ export default function Navbar() {
                     href={social.url}
                     className={cn(
                       buttonVariants({ variant: 'ghost', size: 'icon' }),
-                      'size-12'
+                      'size-8'
                     )}
                   >
                     <social.icon className='size-4' />
@@ -75,10 +75,18 @@ export default function Navbar() {
         <DockIcon>
           <Tooltip>
             <TooltipTrigger asChild>
-              <UserButton />
+              <Link
+                href={'/dashboard'}
+                className={cn(
+                  buttonVariants({ variant: 'ghost', size: 'icon' }),
+                  'size-8'
+                )}
+              >
+                <LayoutDashboardIcon className='size-4' />
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
-              <p>User</p>
+              <p>Dashboard</p>
             </TooltipContent>
           </Tooltip>
         </DockIcon>

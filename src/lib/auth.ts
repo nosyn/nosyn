@@ -11,4 +11,10 @@ export const auth = betterAuth({
     enabled: true,
   },
   plugins: [nextCookies()], // make sure `nextCookies` is the last plugin in the array,
+  socialProviders: {
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    },
+  },
 });
