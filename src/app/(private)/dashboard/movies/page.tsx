@@ -1,5 +1,8 @@
 import { Suspense } from 'react';
-import { ListCarousels } from './_components/list-carousels';
+import {
+  TrendingMoviesCarousel,
+  MoviesCarouselSkeleton,
+} from './_components/movies-carousel';
 
 export default async function MoviesPage() {
   return (
@@ -8,8 +11,8 @@ export default async function MoviesPage() {
         <div className='text-lg font-semibold text-muted-foreground'>
           Trending Movies
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <ListCarousels />
+        <Suspense fallback={<MoviesCarouselSkeleton />}>
+          <TrendingMoviesCarousel />
         </Suspense>
       </div>
     </div>

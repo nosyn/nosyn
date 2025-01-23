@@ -10,7 +10,8 @@
     "lint": "next lint",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
-    "db:studio": "npx drizzle-kit studio"
+    "db:studio": "npx drizzle-kit studio",
+    "schema:tmdb": "npx openapi-typescript https://developer.themoviedb.org/openapi/64542913e1f86100738e227f --output src/services/tmdb/schema.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -62,6 +63,7 @@
     "lucide-react": "^0.473.0",
     "next": "15.1.5",
     "next-themes": "^0.4.4",
+    "openapi-fetch": "^0.13.4",
     "react": "19.0.0",
     "react-day-picker": "8.10.1",
     "react-dom": "19.0.0",
@@ -90,6 +92,7 @@
     "drizzle-kit": "^0.26.2",
     "eslint": "^8",
     "eslint-config-next": "15.1.5",
+    "openapi-typescript": "^7.5.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
