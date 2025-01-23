@@ -19,6 +19,7 @@ export const SignOutForm = () => {
         });
       }}
       disabled={isPending}
+      variant={'ghost'}
     >
       Sign Out {isPending && <Loader2Icon className='animate-spin' />}
     </Button>
