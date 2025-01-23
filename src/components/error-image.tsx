@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils';
 import { ImageOffIcon } from 'lucide-react';
 import React from 'react';
-import { Skeleton } from './ui/skeleton';
 
 export const ErrorImage = ({
   className,
