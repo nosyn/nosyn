@@ -2,7 +2,6 @@
 
 import {
   AudioWaveform,
-  BookOpen,
   Bot,
   Command,
   GalleryVerticalEnd,
@@ -14,10 +13,16 @@ import {
 } from 'lucide-react';
 import * as React from 'react';
 
-import { NavMain } from '@/app/(private)/_components/nav-main';
-import { NavProjects } from '@/app/(private)/_components/nav-projects';
+import { NavMain, NavMainItem } from '@/app/(private)/_components/nav-main';
+import {
+  NavProject,
+  NavProjects,
+} from '@/app/(private)/_components/nav-projects';
 import { NavUser } from '@/app/(private)/_components/nav-user';
-import { TeamSwitcher } from '@/app/(private)/_components/team-switcher';
+import {
+  NavTeam,
+  TeamSwitcher,
+} from '@/app/(private)/_components/team-switcher';
 import {
   Sidebar,
   SidebarContent,
@@ -26,8 +31,11 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 
-// This is sample data.
-const data = {
+const SidebarData: {
+  teams: NavTeam[];
+  navMainItems: NavMainItem[];
+  projects: NavProject[];
+} = {
   teams: [
     {
       name: 'Acme Inc',
@@ -45,7 +53,7 @@ const data = {
       plan: 'Free',
     },
   ],
-  navMain: [
+  navMainItems: [
     {
       title: 'Playground',
       url: '#',
@@ -69,6 +77,7 @@ const data = {
     {
       title: 'Models',
       url: '#',
+
       icon: Bot,
       items: [
         {
@@ -86,31 +95,29 @@ const data = {
       ],
     },
     {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
+      title: 'Movies',
+      url: '/dashboard/movies',
+
+      icon: PopcornIcon,
       items: [
         {
-          title: 'Introduction',
-          url: '#',
+          title: 'Home',
+          url: '/dashboard/movies',
         },
         {
-          title: 'Get Started',
-          url: '#',
+          title: 'Search Movies',
+          url: '/dashboard/movies/search',
         },
         {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
+          title: 'Watch List',
+          url: '/dashboard/movies/watch-list',
         },
       ],
     },
     {
       title: 'Settings',
       url: '#',
+
       icon: Settings2,
       items: [
         {
@@ -134,11 +141,6 @@ const data = {
   ],
   projects: [
     {
-      name: 'Movies',
-      url: '/dashboard/movies',
-      icon: PopcornIcon,
-    },
-    {
       name: 'Sales & Marketing',
       url: '#',
       icon: PieChart,
@@ -155,11 +157,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={SidebarData.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={SidebarData.navMainItems} />
+        <NavProjects projects={SidebarData.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

@@ -1,4 +1,5 @@
 import { ErrorImage } from '@/components/error-image';
+import { Badge } from '@/components/ui/badge';
 import {
   Carousel,
   CarouselContent,
@@ -14,41 +15,126 @@ export async function TrendingMoviesCarousel() {
   const trendingMovies = await tmdbServices.trendingMovies();
 
   if (!trendingMovies) {
-    return (
-      <div className='flex gap-2'>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <ErrorImage key={index} className='basis-1/5 w-full h-48' />
-        ))}
-      </div>
-    );
+    return <ErrorMoviesCarousel />;
   }
 
   return (
     <Carousel
       opts={{
         loop: true,
+        align: 'start',
       }}
+      className='group'
     >
-      <CarouselContent className='group'>
+      <CarouselContent>
         {trendingMovies.results?.map((result, index) => (
-          <CarouselItem key={index} className='basis-1/5 relative pl-0 ml-2'>
+          <CarouselItem key={index} className='basis-1/5 border-red-500'>
             <Image
-              src={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
               alt={result.title ? result.title : 'Movie Title'}
-              width={240}
-              height={192}
-              className='w-full h-48 rounded-md'
-              objectFit='fill'
+              width={750}
+              height={1125}
+              className='border-primary-foreground border'
             />
-            <div className='absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-50 text-white text-center'>
-              {result.title}
+
+            <div>
+              <div className='text-muted-foreground'>{result.title}</div>
+              <Badge variant='secondary'>{result.vote_average}</Badge>
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className='absolute left-0' />
-      <CarouselNext className='absolute right-0' />
+      <MoviesCarouselPreviousButton />
+      <MoviesCarouselNextButton />
     </Carousel>
+  );
+}
+
+export async function PopularMoviesCarousel() {
+  const popularMovies = await tmdbServices.popularMovies();
+
+  if (!popularMovies) {
+    return <ErrorMoviesCarousel />;
+  }
+
+  return (
+    <Carousel
+      opts={{
+        loop: true,
+        align: 'start',
+      }}
+      className='group'
+    >
+      <CarouselContent>
+        {popularMovies.results?.map((result, index) => (
+          <CarouselItem key={index} className='basis-1/5 border-red-500'>
+            <Image
+              src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
+              alt={result.title ? result.title : 'Movie Title'}
+              width={750}
+              height={1125}
+              className='border-primary-foreground border'
+            />
+
+            <div>
+              <div className='text-muted-foreground'>{result.title}</div>
+              <Badge variant='secondary'>{result.vote_average}</Badge>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <MoviesCarouselPreviousButton />
+      <MoviesCarouselNextButton />
+    </Carousel>
+  );
+}
+
+export async function TopRatedMoviesCarousel() {
+  const topRatedMovies = await tmdbServices.topRatedMovies();
+
+  if (!topRatedMovies) {
+    return <ErrorMoviesCarousel />;
+  }
+
+  return (
+    <Carousel
+      opts={{
+        loop: true,
+        align: 'start',
+      }}
+      className='group'
+    >
+      <CarouselContent>
+        {topRatedMovies.results?.map((result, index) => (
+          <CarouselItem key={index} className='basis-1/5'>
+            <Image
+              src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
+              alt={result.title ? result.title : 'Movie Title'}
+              width={750}
+              height={1125}
+              className='border-primary-foreground border'
+            />
+
+            <div>
+              <div className='text-muted-foreground'>{result.title}</div>
+              <Badge variant='secondary'>{result.vote_average}</Badge>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <MoviesCarouselPreviousButton />
+      <MoviesCarouselNextButton />
+    </Carousel>
+  );
+}
+
+export function ErrorMoviesCarousel() {
+  return (
+    <div className='flex gap-2'>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <ErrorImage key={index} className='basis-1/5 w-full h-48' />
+      ))}
+    </div>
   );
 }
 
@@ -56,8 +142,23 @@ export async function MoviesCarouselSkeleton() {
   return (
     <div className='flex gap-2'>
       {Array.from({ length: 5 }).map((_, index) => (
-        <Skeleton key={index} className='basis-1/5 w-full h-48 animate-pulse' />
+        <Skeleton
+          key={index}
+          className='basis-1/5 w-full h-[436px] animate-pulse'
+        />
       ))}
     </div>
+  );
+}
+
+export function MoviesCarouselPreviousButton() {
+  return (
+    <CarouselPrevious className='absolute left-2 invisible group-hover:visible' />
+  );
+}
+
+export function MoviesCarouselNextButton() {
+  return (
+    <CarouselNext className='absolute right-2 invisible group-hover:visible' />
   );
 }

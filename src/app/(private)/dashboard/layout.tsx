@@ -1,3 +1,5 @@
+'use client';
+
 import { AppSidebar } from '@/app/(private)/_components/app-sidebar';
 import {
   Breadcrumb,
@@ -13,12 +15,18 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Fragment } from 'react';
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const paths = pathname.split('/');
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -29,15 +37,20 @@ export default function DashboardLayout({
             <Separator orientation='vertical' className='mr-2 h-4' />
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className='hidden md:block'>
-                  <BreadcrumbLink href='#'>
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className='hidden md:block' />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
+                {paths.slice(1).map((path, index) => (
+                  <Fragment key={index}>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink className='capitalize' asChild>
+                        <Link href={paths.slice(0, index - 1).join('/')}>
+                          {path}
+                        </Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    {index < paths.length - 2 && (
+                      <BreadcrumbSeparator className='hidden md:block' />
+                    )}
+                  </Fragment>
+                ))}
               </BreadcrumbList>
             </Breadcrumb>
           </div>

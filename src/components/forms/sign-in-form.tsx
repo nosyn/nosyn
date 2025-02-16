@@ -19,7 +19,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useSignIn } from '@/hooks/auth/use-sign-in';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2Icon } from 'lucide-react';
+import { Loader2Icon, MoveLeftIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
@@ -28,6 +28,7 @@ import { PasswordInput } from '../inputs/password-input';
 import { cn } from '@/lib/utils';
 import { useMutation } from '@tanstack/react-query';
 import { authClient } from '@/lib/auth-client';
+import Link from 'next/link';
 
 export const signInFormSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
@@ -72,7 +73,7 @@ export function SignInForm({
     (values: TSignInForm) => {
       signIn(values, {
         onSuccess: () => {
-          router.back();
+          router.push('/dashboard');
         },
       });
     },
@@ -88,6 +89,12 @@ export function SignInForm({
       >
         <Card className='mx-auto max-w-sm'>
           <CardHeader>
+            <Button variant={'link'} asChild className='w-fit px-0' size={'sm'}>
+              <Link href='/' className='hover:no-underline'>
+                <MoveLeftIcon />
+                Home
+              </Link>
+            </Button>
             <CardTitle className='text-2xl'>Sign In</CardTitle>
             <CardDescription>
               Enter your email below to login to your account

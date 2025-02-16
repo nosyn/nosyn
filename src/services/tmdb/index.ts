@@ -1,7 +1,6 @@
 import 'server-only';
 import createClient from 'openapi-fetch';
 import { paths } from './schema';
-import { waitFor } from '@/lib/utils';
 
 class TMDBServices {
   private client: ReturnType<typeof createClient<paths>>;
@@ -38,7 +37,37 @@ class TMDBServices {
       },
     });
 
-    await waitFor(3000);
+    return data;
+  }
+
+  async popularMovies({
+    language = 'en-US',
+  }: {
+    language?: string;
+  } = {}) {
+    const { data } = await this.client.GET('/3/movie/popular', {
+      params: {
+        query: {
+          language,
+        },
+      },
+    });
+
+    return data;
+  }
+
+  async topRatedMovies({
+    language = 'en-US',
+  }: {
+    language?: string;
+  } = {}) {
+    const { data } = await this.client.GET('/3/movie/top_rated', {
+      params: {
+        query: {
+          language,
+        },
+      },
+    });
 
     return data;
   }

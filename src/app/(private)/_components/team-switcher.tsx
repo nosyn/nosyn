@@ -18,15 +18,13 @@ import {
 } from '@/components/ui/sidebar';
 import { CaretSortIcon, PlusIcon } from '@radix-ui/react-icons';
 
-export function TeamSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
+export type NavTeam = {
+  name: string;
+  logo: React.ElementType;
+  plan: string;
+};
+
+export function TeamSwitcher({ teams }: { teams: NavTeam[] }) {
   const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
