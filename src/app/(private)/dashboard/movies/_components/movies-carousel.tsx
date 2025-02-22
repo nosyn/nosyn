@@ -1,3 +1,5 @@
+'use client';
+
 import { ErrorImage } from '@/components/error-image';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -8,54 +10,26 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Skeleton } from '@/components/ui/skeleton';
-import { tmdbServices } from '@/services/tmdb';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-export async function TrendingMoviesCarousel() {
-  const trendingMovies = await tmdbServices.trendingMovies();
+const CAROUSEL_RESPONSIVE_STYLE =
+  'basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6';
 
-  if (!trendingMovies) {
-    return <ErrorMoviesCarousel />;
-  }
+export type Movie = {
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  id: number;
+};
 
-  return (
-    <Carousel
-      opts={{
-        loop: true,
-        align: 'start',
-      }}
-      className='group'
-    >
-      <CarouselContent>
-        {trendingMovies.results?.map((result, index) => (
-          <CarouselItem key={index} className='basis-1/5 border-red-500'>
-            <Image
-              src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
-              alt={result.title ? result.title : 'Movie Title'}
-              width={750}
-              height={1125}
-              className='border-primary-foreground border'
-            />
+export type MoviesCarouselProps = {
+  movies: Movie[];
+};
 
-            <div>
-              <div className='text-muted-foreground'>{result.title}</div>
-              <Badge variant='secondary'>{result.vote_average}</Badge>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <MoviesCarouselPreviousButton />
-      <MoviesCarouselNextButton />
-    </Carousel>
-  );
-}
-
-export async function PopularMoviesCarousel() {
-  const popularMovies = await tmdbServices.popularMovies();
-
-  if (!popularMovies) {
-    return <ErrorMoviesCarousel />;
-  }
+export function MoviesCarousel({ movies }: MoviesCarouselProps) {
+  const router = useRouter();
 
   return (
     <Carousel
@@ -63,61 +37,29 @@ export async function PopularMoviesCarousel() {
         loop: true,
         align: 'start',
       }}
-      className='group'
     >
       <CarouselContent>
-        {popularMovies.results?.map((result, index) => (
-          <CarouselItem key={index} className='basis-1/5 border-red-500'>
+        {movies.map((result, index) => (
+          <CarouselItem
+            key={index}
+            className={`${CAROUSEL_RESPONSIVE_STYLE} space-y-2 h-fit`}
+          >
             <Image
               src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
-              alt={result.title ? result.title : 'Movie Title'}
+              alt={result.title ?? 'Movie Title'}
               width={750}
-              height={1125}
-              className='border-primary-foreground border'
+              height={1200}
+              className='border-foreground/30 border cursor-pointer'
+              onClick={() => {
+                router.push(`/dashboard/movies/${result.id}`);
+              }}
             />
 
             <div>
-              <div className='text-muted-foreground'>{result.title}</div>
-              <Badge variant='secondary'>{result.vote_average}</Badge>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <MoviesCarouselPreviousButton />
-      <MoviesCarouselNextButton />
-    </Carousel>
-  );
-}
-
-export async function TopRatedMoviesCarousel() {
-  const topRatedMovies = await tmdbServices.topRatedMovies();
-
-  if (!topRatedMovies) {
-    return <ErrorMoviesCarousel />;
-  }
-
-  return (
-    <Carousel
-      opts={{
-        loop: true,
-        align: 'start',
-      }}
-      className='group'
-    >
-      <CarouselContent>
-        {topRatedMovies.results?.map((result, index) => (
-          <CarouselItem key={index} className='basis-1/5'>
-            <Image
-              src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
-              alt={result.title ? result.title : 'Movie Title'}
-              width={750}
-              height={1125}
-              className='border-primary-foreground border'
-            />
-
-            <div>
-              <div className='text-muted-foreground'>{result.title}</div>
-              <Badge variant='secondary'>{result.vote_average}</Badge>
+              <Link href={`/dashboard/movies/${result.id}`} className='block'>
+                {result.title}
+              </Link>
+              <Badge>{result.vote_average.toPrecision(2)}</Badge>
             </div>
           </CarouselItem>
         ))}
@@ -132,19 +74,22 @@ export function ErrorMoviesCarousel() {
   return (
     <div className='flex gap-2'>
       {Array.from({ length: 5 }).map((_, index) => (
-        <ErrorImage key={index} className='basis-1/5 w-full h-48' />
+        <ErrorImage
+          key={index}
+          className={`${CAROUSEL_RESPONSIVE_STYLE} w-full h-48`}
+        />
       ))}
     </div>
   );
 }
 
-export async function MoviesCarouselSkeleton() {
+export function MoviesCarouselSkeleton() {
   return (
     <div className='flex gap-2'>
       {Array.from({ length: 5 }).map((_, index) => (
         <Skeleton
           key={index}
-          className='basis-1/5 w-full h-[436px] animate-pulse'
+          className={`${CAROUSEL_RESPONSIVE_STYLE} w-full h-[436px] animate-pulse`}
         />
       ))}
     </div>
@@ -153,12 +98,12 @@ export async function MoviesCarouselSkeleton() {
 
 export function MoviesCarouselPreviousButton() {
   return (
-    <CarouselPrevious className='absolute left-2 invisible group-hover:visible' />
+    <CarouselPrevious className='absolute left-2 invisible group-hover:visible top-1/2 border-foreground/30' />
   );
 }
 
 export function MoviesCarouselNextButton() {
   return (
-    <CarouselNext className='absolute right-2 invisible group-hover:visible' />
+    <CarouselNext className='absolute right-2 invisible group-hover:visible border-foreground/30' />
   );
 }
