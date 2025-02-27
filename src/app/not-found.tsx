@@ -15,7 +15,7 @@ export default function NotFoundPage() {
             href={'/'}
             className='flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition-colors'
           >
-            <ArrowLeft className='w-4 h-4 mr-2' />
+            <ArrowLeft className='size-4 mr-2' />
             Back to home
           </Link>
         </div>
