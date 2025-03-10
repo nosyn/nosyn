@@ -41,12 +41,13 @@ export const ResumeCard = ({
   return (
     <Link
       href={href || '#'}
+      target='_blank'
       className='block cursor-pointer'
       onClick={handleClick}
     >
-      <Card className='flex border-none shadow-none p-0 m-0'>
-        <div className='flex-none py-2'>
-          <Avatar className='flex-none border rounded-full w-12 h-12'>
+      <Card className='flex-row gap-2 border-none shadow-none p-0 m-0'>
+        <div className='py-2'>
+          <Avatar className='border rounded-full w-12 h-12'>
             <AvatarImage
               src={logoUrl}
               alt={altText}
@@ -55,7 +56,7 @@ export const ResumeCard = ({
             <AvatarFallback>{altText[0]}</AvatarFallback>
           </Avatar>
         </div>
-        <div className='flex-grow items-center flex-col group'>
+        <div className='grow items-center flex-col group'>
           <CardHeader className='p-2'>
             <div className='flex items-center justify-between gap-x-2 text-base'>
               <h3 className='inline-flex items-center justify-center font-semibold leading-none text-xs sm:text-sm'>

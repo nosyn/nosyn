@@ -1,13 +1,15 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 
-export const PasswordInput = React.forwardRef<
-  HTMLInputElement,
-  React.ComponentProps<'input'>
->((props, ref) => {
+export const PasswordInput = ({
+  className,
+  placeholder = 'Password',
+  ...props
+}: React.ComponentProps<'input'>) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
@@ -15,10 +17,9 @@ export const PasswordInput = React.forwardRef<
   return (
     <div className='relative'>
       <Input
-        className='pe-9'
-        placeholder='Password'
+        className={cn('pe-9', className)}
+        placeholder={placeholder}
         type={isVisible ? 'text' : 'password'}
-        ref={ref}
         {...props}
       />
       <button
@@ -37,6 +38,6 @@ export const PasswordInput = React.forwardRef<
       </button>
     </div>
   );
-});
+};
 
 PasswordInput.displayName = 'PasswordInput';

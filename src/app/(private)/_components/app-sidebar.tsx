@@ -6,7 +6,7 @@ import {
   Command,
   GalleryVerticalEnd,
   Map,
-  PieChart,
+  PyramidIcon,
   PopcornIcon,
   Settings2,
   SquareTerminal,
@@ -141,9 +141,9 @@ const SidebarData: {
   ],
   projects: [
     {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
+      name: 'Sorting Visualizer',
+      url: '/dashboard/projects/sorting-visualizer',
+      icon: PyramidIcon,
     },
     {
       name: 'Travel',
