@@ -37,19 +37,20 @@ export function MoviesCarousel({ movies }: MoviesCarouselProps) {
         loop: true,
         align: 'start',
       }}
+      className='group'
     >
       <CarouselContent>
         {movies.map((result, index) => (
           <CarouselItem
             key={index}
-            className={`${CAROUSEL_RESPONSIVE_STYLE} space-y-2 h-fit`}
+            className={`${CAROUSEL_RESPONSIVE_STYLE} space-y-2 h-fit rounded-md`}
           >
             <Image
               src={`https://image.tmdb.org/t/p/original${result.poster_path}`}
               alt={result.title ?? 'Movie Title'}
               width={750}
               height={1200}
-              className='border-foreground/30 border cursor-pointer'
+              className='border-foreground/30 border cursor-pointer rounded-md'
               onClick={() => {
                 router.push(`/dashboard/movies/${result.id}`);
               }}
@@ -98,12 +99,12 @@ export function MoviesCarouselSkeleton() {
 
 export function MoviesCarouselPreviousButton() {
   return (
-    <CarouselPrevious className='absolute left-2 invisible group-hover:visible top-1/2 border-foreground/30' />
+    <CarouselPrevious className='absolute left-2 invisible group-hover:visible top-2/5 border-foreground/30' />
   );
 }
 
 export function MoviesCarouselNextButton() {
   return (
-    <CarouselNext className='absolute right-2 invisible group-hover:visible border-foreground/30' />
+    <CarouselNext className='absolute right-2 invisible group-hover:visible top-2/5 border-foreground/30' />
   );
 }
