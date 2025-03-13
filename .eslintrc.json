@@ -14,5 +14,5 @@
       }
     ]
   },
-  "ignorePatterns": ["node_modules/", ".next/", "ui/"]
+  "ignorePatterns": ["node_modules/", ".next/", "ui/", "algorithms/"]
 }

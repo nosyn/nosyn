@@ -141,8 +141,8 @@ const SidebarData: {
   ],
   projects: [
     {
-      name: 'Sorting Visualizer',
-      url: '/dashboard/projects/sorting-visualizer',
+      name: 'Algorithms Visualizer',
+      url: '/dashboard/projects/algorithms-visualizer',
       icon: PyramidIcon,
     },
     {
